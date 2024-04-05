@@ -1,17 +1,19 @@
 
-import './App.css';
-import {Calender,dateFnsLocalizer } from "react-big-calender";
+import {Calendar,dateFnsLocalizer } from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse" ;
 import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
-import "react-big-calender/lib/css/react-big-calender.css";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 import React, {useState} from "react";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import './App.css';
 
 
-const locals ={
-  "en-IND": require("date-fns/locals/en-Ind")
+
+const locales ={
+  "en-US": require("date-fns/locale/en-US")
 }
 const localizer =dateFnsLocalizer({
   format,
@@ -22,22 +24,8 @@ const localizer =dateFnsLocalizer({
 
 })
 const events =[
-  {
-    title:"Big Meeting",
-    allDay : true,
-    start: new Date(2021,6,0),
-    end : new Date(2021,6,0)
-  },
-  {
-    title:"vacation",
-    start:new Date(2021,6,0),
-    end : new Date(2021,6,0)
-  },
-  {
-    title:"conference",
-    start:new Date(2021,6,0),
-    end :new Date(2021,6,0),
-  },
+  
+
 
 ]
 
@@ -49,26 +37,29 @@ function App() {
   }
   return (
     <div className="App">
-      <h1>Calender</h1>
+      <h1>Calendar</h1>
       <h2>Add New Event</h2>
       <div>
         
         <input type="text" placeholder="Add Title" style={{width:"20%",marginRight:"10px"}}
-        value={newEvent.title} onchange={(e)=> setNewEvent({...newEvent,title:e.target.value})}
+          value={newEvent.title} onChange={(e)=> setNewEvent({...newEvent,title:e.target.value})}
         />
         <DatePicker placeholderText="Start Date" style={{marginRight:"10px"}}
-        selected={newEvent.start} onCharge={(start)=> setNewEvent({...newEvent,start})}/>
+        selected={newEvent.start} onChange={(start)=> setNewEvent({...newEvent,start})}
+        showTimeSelect timeIntervals={60} timeFormat="hh:mm"/>
         <DatePicker placeholderText="End Date" 
-        selected={newEvent.end} onCharge={(end)=> setNewEvent({...newEvent,start})}/>
-        <button style={{marginTop:"10px"}}onclick={handleAddEvent}>Add Event</button>
+        selected={newEvent.end} onChange={(end)=> setNewEvent({...newEvent,end})}
+        showTimeSelect timeIntervals={60} timeFormat="hh:mm" />
+        <button style={{marginTop:"10px"}} onClick={handleAddEvent}>Add Event</button>
+        
 
         </div>
       
-      <Calender localizer={localizer} events={events} startAccessor="start" 
+      <Calendar localizer={localizer} events={allEvents} startAccessor="start" 
       endAccessor="end" style={{height:500,margin:"50px"}}/>
    
     </div>
   );
 }
 
-export default App;
+
